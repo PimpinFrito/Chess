@@ -1,0 +1,39 @@
+https://www.chessvariants.org/d.chess/chess.html - basics
+Requirements:
+    DONE 8x8 board: columns are alphabets, rows are numbers
+
+    DONE Pieces: 1 king, 1 queen, 2 rooks,  2 bishops, 2 knights 8 pawns
+
+    DONE White always goes first
+
+    create a graveyard to record lost pieces ?
+
+    Create legal_moves function for all pieces
+
+    Update legal_move function to attack enemy player's pieces
+
+    Create a move history class to record past moves
+
+    Kings can't be attacked, add functionality to detect if king and declare check
+
+    If queens have the combined moves of rook and bishop, maybe have the queen be essentially be a wrapper for both,
+        and call their legal_moves function internally to avoid writing again?
+
+    Take note of all random chess rules like en-passant to implement later on
+
+    DONE Block illegal moves
+
+    Create an ai that moves randomly
+
+    Declare check/ checkmate when required
+
+    Create saving functionality using serialization
+
+    DONE ask chatgpt to color individual square backgrounds
+
+
+FOCUS:
+    DONE Have the board setup, have ability to get cell using correct chess notation( eg. 'a4')
+    DONE Begin creating base game piece interface
+    DONE Begin creating pawn game piece
+
