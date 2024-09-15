@@ -36,4 +36,12 @@ FOCUS:
     DONE Have the board setup, have ability to get cell using correct chess notation( eg. 'a4')
     DONE Begin creating base game piece interface
     DONE Begin creating pawn game piece
+    DONE FINISH PAWN
+    DONE FINISH ROOK
+    DONE FINISH KNIGHT
+    DONE FINISH BISHOP
+    DONE FINISH QUEEN
+    FINISH KING
+    BLOCK KING FROM BEING TAKEN
+
 

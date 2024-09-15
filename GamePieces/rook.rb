@@ -7,7 +7,7 @@ class Rook < GamePiece
   def initialize(color)
     name = "Rook"
     img = "♜"
-    if color == "White"
+    if color == WHITE
       @possible_moves = [[-1, 0]]
     else
       @possible_moves = [[1, 0]]
@@ -49,12 +49,14 @@ class Rook < GamePiece
     moves = []
 
     #Get Bottom side
-    until current_row >= ROW_SIZE ||
-      (board[current_row][column].is_a?(GamePiece) && board[current_row][column].get_color == get_color)
+    until current_row >= ROW_SIZE || (board[current_row][column].is_a?(GamePiece) )
       moves.push([current_row, column])
       current_row += 1
-      p moves
     end
+
+    #If cell the looped ended at, contains a game_piece
+    # Check if it's an enemy piece, and if so the coordinates to movelist
+    add_move_if_enemy_piece_is_found(board, current_row, column, moves)
 
     #Get Top side
     current_row = piece_coords[0] - 1
@@ -62,8 +64,13 @@ class Rook < GamePiece
       moves.push([current_row, column])
       current_row -= 1
     end
+    #If cell the looped ended at, contains a game_piece
+    # Check if it's an enemy piece, and if so the coordinates to movelist
+    add_move_if_enemy_piece_is_found(board, current_row, column, moves)
     moves
   end
+
+  private
 
 
 end

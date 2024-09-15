@@ -38,7 +38,7 @@ class Board
     white_pawn_row.each_index do |col|
       white_pawn_row[col] = Pawn.new(WHITE, [6,col])
     end
-    @rows[5][0] = Rook.new(WHITE)
+    @rows[7][0] = Rook.new(WHITE)
     @rows[7][7] = Rook.new(WHITE)
 
     @rows[7][1] = Knight.new(WHITE)
@@ -102,6 +102,9 @@ class Board
       puts
       current_cell_bg = current_cell_bg == WHITE_BG ? BLACK_BG : WHITE_BG
     end
+    print " "
+    "abcdefgh".split("").each{ |column_letter| print "  #{column_letter}"}
+    puts
   end
 
   def display_possible_moves_for_piece(location)
@@ -115,7 +118,6 @@ class Board
     if position.is_a? String
       position = position.split("")
     end
-    p position
     col = position[0]
     chess_col = COLUMN_HASHMAP[col]
     row = position[1]

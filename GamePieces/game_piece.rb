@@ -7,7 +7,7 @@ class GamePiece
   @color = nil
   WHITE = "White"
   BLACK = "Black"
-
+  EMPTY_POSITION = "   "
 
   # def initialize(color)
   #   @color = color
@@ -23,7 +23,25 @@ class GamePiece
 
     @color = color
     @name = name
-    @img = @color == WHITE ? "\033[97m#{img}" : "\033[30m#{img}"
+    @img = (@color == WHITE ? "\033[97m#{img}" : "\033[30m#{img}")
+  end
+
+  def cell_empty? (row, column, board)
+    board[row][column] == EMPTY_POSITION
+  end
+
+  def enemy_piece_in_cell?(row, column, board)
+    board[row][column].get_color != @color
+  end
+
+  def cell_available(row, column, board)
+    return false unless move_inbounds?([row, column])
+    return true if cell_empty?(row, column, board)
+    enemy_piece_in_cell?(row, column, board)
+  end
+
+  def cell_occupied(row, column, board)
+    !cell_empty?(row, column, board)
   end
 
   def to_s
@@ -33,7 +51,15 @@ class GamePiece
 
   def get_color
     @color
+  end
 
+  def add_move_if_enemy_piece_is_found(board, current_row, column, moves)
+    cell = board[current_row][column]
+    if cell.is_a?(GamePiece) && cell.get_color != get_color
+      p "Chosen Cell: #{cell.get_color}"
+      p "Self: #{get_color}"
+      moves.push([current_row, column])
+    end
   end
 
   def get_name
@@ -42,24 +68,11 @@ class GamePiece
 
   def legal_moves(piece_coords =[], board)
     raise StandardError, "Not overridden"
-    # legal_moves = []
-    # row_size = board_size[0]
-    # col_size = board_size[1]
-    # @possible_moves.each do | move |
-    #   possible_row = piece_coords[0] + move[0]
-    #   possible_col = piece_coords[1] + move[1]
-    #   #If possible_row and column aren't outside the bounds
-    #   # then add to legal move list
-    #   if possible_row <= row_size && possible_col <= col_size && possible_row >= 0 && possible_col >= 0
-    #     legal_moves.push [possible_row, possible_col]
-    #   end
-    # end
-    # legal_moves
   end
 
   def move_inbounds?(move = [])
     possible_row = move[0]
     possible_col = move[1]
-    possible_row <= ROW_SIZE && possible_col <= COL_SIZE && possible_row >= 0 && possible_col >= 0
+    possible_row < ROW_SIZE && possible_col < COL_SIZE && possible_row >= 0 && possible_col >= 0
   end
 end
