@@ -2,11 +2,6 @@
 require_relative 'game_piece'
 
 class Pawn < GamePiece
-
-  # def initialize(color, starting_coords)
-  #   super color
-  #   @starting_coords = starting_coords
-  # end
   def initialize(color, starting_coords)
     name = "Pawn"
     img = "♟"
@@ -15,7 +10,7 @@ class Pawn < GamePiece
 
   end
 
-  def legal_moves(piece_coords = nil, board)
+  def legal_moves(piece_coords = [], board)
     row = piece_coords[0]
     col = piece_coords[1]
     forward_move = @color == WHITE ? -1 : 1

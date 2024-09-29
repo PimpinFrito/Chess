@@ -55,7 +55,7 @@ class Board
   def setup_black
     black_pawn_row = @rows[1]
     black_pawn_row.each_index do |col|
-      black_pawn_row[col] = Pawn.new(BLACK, [7,col])
+      black_pawn_row[col] = Pawn.new(BLACK, [1,col])
     end
     @rows[0][0] = Rook.new(BLACK)
     @rows[0][7] = Rook.new(BLACK)
@@ -141,7 +141,7 @@ class Board
   end
 
   def choose_piece_to_move
-    puts "Select a piece to move"
+    print "Select a piece to move: "
     user_input = gets.chomp.downcase
     until valid_first_move(user_input)
       puts "Not a valid move. Select a piece to move"
@@ -151,11 +151,25 @@ class Board
     to_array_notation(user_input)
   end
 
-  def valid_second_move(raw_user_input, move_list =[])
-    user_input = raw_user_input.split("")
+  def valid_user_input(user_input)
     return false unless user_input.length == 2
-    return false unless ROW_HASHMAP.keys.include?(user_input[1])
-    return false unless COLUMN_HASHMAP.keys.include?(user_input[0])
+    unless user_input.length == 2
+      puts "Invalid input, must in formatted like so: a4"
+      return false
+    end
+    unless ROW_HASHMAP.keys.include?(user_input[1])
+      puts "Invalid row, please try again"
+      return false
+    end
+    unless COLUMN_HASHMAP.keys.include?(user_input[0])
+      puts "Invalid column, please try again"
+      return false
+    end
+    true
+  end
+
+  def valid_second_move(raw_user_input, move_list)
+    return false unless valid_user_input(raw_user_input)
     array_notation = to_array_notation(raw_user_input)
     return false unless move_list.include? array_notation
     cell = get_cell(raw_user_input)
@@ -166,22 +180,52 @@ class Board
     piece = @rows[from_cell[0]][from_cell[1]]
     raise ArgumentError, "from_cell contents must be a GamePiece subclass" unless piece.is_a? GamePiece
     move_list = piece.legal_moves(from_cell, @rows)
+    puts "Where to move piece? (Leave empty to choose another piece)"
     user_input = gets.chomp.downcase
+    return false if user_input.empty?
     until valid_second_move(user_input, move_list)
-      puts "Not a valid move. Select a valid place to move"
+      puts "Not a valid move. Select a valid place to move (Leave empty to choose another piece)"
       user_input = gets.chomp.downcase
+      return false if user_input.empty?
     end
 
     to_array_notation(user_input)
   end
 
+  def in_check?()
+
+  end
+
+  def look_for_check()
+
+  end
+
   def play_turn
+    display_board
+    puts "#{@current_player}'s turn"
     from_cell = choose_piece_to_move
     display_possible_moves_for_piece(from_cell)
 
     to_cell = choose_cell_to_move_piece(from_cell)
+    #Player decided to choose another piece. Cancel and start function over
+    return false if to_cell == false
     move_piece(from_cell, to_cell)
     display_board
+    true
+  end
+
+  def start
+    while true
+      successful_turn = false
+      until successful_turn
+        successful_turn = play_turn
+      end
+      change_player
+    end
+  end
+
+  def change_player
+    @current_player = (@current_player == WHITE ? BLACK : WHITE)
   end
 
   # def to_chess_notation(position = [])
@@ -209,5 +253,4 @@ board = Board.new
 # pawn = Pawn.new(WHITE, [6, 0])
 # rook = Rook.new(WHITE)
 # board.display_possible_moves_for_piece(rook,[4,0])
-board.display_board
-board.play_turn
+board.start

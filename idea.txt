@@ -8,9 +8,9 @@ Requirements:
 
     create a graveyard to record lost pieces ?
 
-    Create legal_moves function for all pieces
+    DONE Create legal_moves function for all pieces
 
-    Update legal_move function to attack enemy player's pieces
+    DONE Update legal_move function to attack enemy player's pieces
 
     Create a move history class to record past moves
 
@@ -41,7 +41,17 @@ FOCUS:
     DONE FINISH KNIGHT
     DONE FINISH BISHOP
     DONE FINISH QUEEN
-    FINISH KING
+    DONE FINISH KING
     BLOCK KING FROM BEING TAKEN
+    IMPLEMENT CHECK
+    IMPLEMENT CHECKMATE
+
+
+Creating check:
+    - Block any move from a player that would leave their king in check
+    - Check after a players move whether they have the enemy king in check.
+
+Detecting CHECKMATE:
+    - ?
 
 
