@@ -1,0 +1,1 @@
+Two-player chess game played in the command line, built with Ruby. It features a fully-functional board, move validation, check/checkmate detection, and a clean, text-based UI. The project emphasizes object-oriented design, game logic handling, and terminal-based user input.
